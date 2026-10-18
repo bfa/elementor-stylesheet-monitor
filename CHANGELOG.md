@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1
+
+- Show the installed ESM version on the Status tab for easy post-update confirmation.
+- No changes to health checks, compatibility behavior, settings, collector credentials or schedules.
+
 ## 0.4.0
 
 - Add WordPress update discovery from published stable GitHub releases with mandatory packaged ZIP assets.

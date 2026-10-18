@@ -128,6 +128,7 @@ function render_page() {
     $health = StylesheetHealth\collect($rows, 'admin_live');
     $saved_health = get_option(StylesheetHealth\OPTION, array());
     if ($tab === 'status') {
+        echo '<p><strong>Installed ESM version:</strong> ' . esc_html(\ElementorStylesMonitor\VERSION) . '</p>';
         \ElementorStylesMonitor\Status\render(\ElementorStylesMonitor\Status\rows($health));
     } elseif ($tab === 'stylesheets') {
         StylesheetHealth\render($health, $saved_health['history'] ?? array());

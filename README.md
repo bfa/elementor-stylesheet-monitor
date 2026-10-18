@@ -2,7 +2,7 @@
 
 A WordPress plugin for observing Elementor responsive stylesheet health, recording purge events, optionally invalidating conflicting metadata cache copies, and sending email alarms.
 
-**Version:** 0.4.0 · **Requires:** WordPress 6.6+, PHP 8.1+ · Individual-site activation only.
+**Version:** 0.4.1 · **Requires:** WordPress 6.6+, PHP 8.1+ · Individual-site activation only.
 
 ## Features
 

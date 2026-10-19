@@ -2,7 +2,7 @@
 
 A WordPress plugin for observing Elementor responsive stylesheet health, recording purge events, optionally invalidating conflicting metadata cache copies, and sending email alarms.
 
-**Version:** 0.4.1 · **Requires:** WordPress 6.6+, PHP 8.1+ · Individual-site activation only.
+**Version:** 0.5.0 · **Requires:** WordPress 6.6+, PHP 8.1+ · Individual-site activation only.
 
 ## Features
 
@@ -34,9 +34,19 @@ No GitHub token is required or stored. Requests expose standard connection infor
 
 The plugin does not enable WordPress automatic updates or change an existing preference. Keep auto-updates off during initial observation. Installing updates remains subject to WordPress filesystem permissions and any fleet-management policy.
 
+## Scheduled reports
+
+Settings includes report enablement, daily/weekly frequency, preferred local hour and weekly day (Monday by default). Reports share the alarm recipient. New installations default reports off, daily at 7 AM; existing sites with signed collection retain daily reports on upgrade. Reports require the updated external collector; the plugin never schedules report mail itself. Collection and plugin alarms are independent of this switch.
+
+The signed snapshot includes report preferences, recipient and a settings revision. Google must check current preferences before sending. An hourly report trigger supports per-site timezones, including daylight saving and fixed offsets. The selected hour is a scheduling window, not exact delivery; delayed runs may catch up later on the scheduled day. Weekly reporting is limited to the selected local day, with history capped at seven days. When the endpoint is unavailable, report sending pauses rather than using potentially disabled/stale preferences; independent collection alarms can still notify.
+
+The Status page shows report enablement, Google settings acknowledgment, next expected window and last submission result. A receipt is not proof of inbox delivery. Mail attempts reserve their calendar period before submission; failed or ambiguous sends are not automatically retried in that period, avoiding duplicates after crashes. Inspect Google execution history when a result needs attention. Changing the hour, recipient or frequency does not resend a report already reserved in the same local period.
+
+Companion source and deployment instructions are in [collector/README.md](collector/README.md) in this repository (not the plugin ZIP). Deploy the updated Google collector before relying on these controls. Older collectors ignore the new preferences and retain their old schedule; the Status page explicitly shows missing acknowledgment. Rollback requires restoring both components. No Google credentials or schedules are included in the plugin ZIP.
+
 ## Storage and removal
 
-Per-site options include `esm_settings_v1`, `esm_purge_log_v1` (50 events), `esm_css_health_v1` (48 snapshots), `esm_email_alerts_state_v1`, `esm_collector_key`, `esm_collector_receipt_v1`, and the updater's `external_updates-elementor-stylesheet-monitor` cache. Short-lived `esm_nonce_*` rows reserve signed requests; expiry cleanup runs in bounded batches. ESM email follow-ups use `esm_email_followup`; the bundled updater manages its own scheduled checks.
+Per-site options include `esm_settings_v1`, `esm_purge_log_v1` (50 events), `esm_css_health_v1` (48 snapshots), `esm_email_alerts_state_v1`, `esm_collector_key`, `esm_collector_receipt_v1`, `esm_report_receipt_v1`, and the updater's `external_updates-elementor-stylesheet-monitor` cache. Short-lived `esm_nonce_*` rows reserve signed requests; expiry cleanup runs in bounded batches. ESM email follow-ups use `esm_email_followup`; the bundled updater manages its own scheduled checks.
 
 Deactivation stops the email follow-up and the updater's own scheduled checks. Historical settings/evidence intentionally survive deactivation and uninstall. Remove them only after deciding what investigation history to preserve. Legacy duplicate tooling must be deactivated before activation; previous callback namespaces are detected to avoid duplicate monitors.
 

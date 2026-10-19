@@ -62,11 +62,12 @@ function rows($health, $mail_state = null) {
     } catch (\Throwable $e) {
         $rows[] = row('email','Plugin email alarms','Unknown','Email state could not be read','private email state',null);
     }
+    $rows = array_merge($rows, \ElementorStylesMonitor\Reports\rows());
     // Feature switches keep a fixed group even when disabled or needing attention.
     $groups = array(
         array('files','http','metadata','cache','directory','collector','freshness'),
-        array('compatibility','email'),
-        array('versions','purge','incident')
+        array('compatibility','email','reports'),
+        array('versions','purge','incident','report_schedule','report_result')
     );
     $rank = array('Attention'=>0,'Stale'=>1,'Pending'=>2,'Unknown'=>3,'Disabled'=>4,'Enabled'=>5,'Healthy'=>5);
     $position = static function($id) use ($groups) {

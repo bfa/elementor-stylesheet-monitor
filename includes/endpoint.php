@@ -38,6 +38,7 @@ function snapshot() {
     $events = is_array($events) ? array_slice($events,-50) : array();
     $health = \ElementorStylesMonitor\Log\StylesheetHealth\observe($events,'collector');
     $data = array('schemaVersion'=>1,'site'=>untrailingslashit(home_url()),'generatedUtc'=>gmdate('c'),
+        'reportPreferences'=>\ElementorStylesMonitor\Reports\preferences(),
         'events'=>$events,'cssHealth'=>$health,'statusRows'=>\ElementorStylesMonitor\Status\rows($health));
     if (strlen(wp_json_encode($data)) > 500000) { return new \WP_Error('esm_limit','Snapshot unavailable',array('status'=>503)); }
     return new \WP_REST_Response($data,200);
@@ -59,6 +60,8 @@ function receipt($request) {
 add_action('rest_api_init',static function() {
     register_rest_route('stylesheet-monitor/v1','/snapshot',array('methods'=>'GET',
         'permission_callback'=>__NAMESPACE__ . '\\authorize','callback'=>__NAMESPACE__ . '\\snapshot'));
+    register_rest_route('stylesheet-monitor/v1','/report-receipt',array('methods'=>'POST',
+        'permission_callback'=>__NAMESPACE__ . '\\authorize','callback'=>'ElementorStylesMonitor\\Reports\\receipt'));
     register_rest_route('stylesheet-monitor/v1','/receipt',array('methods'=>'POST',
         'permission_callback'=>__NAMESPACE__ . '\\authorize','callback'=>__NAMESPACE__ . '\\receipt'));
 });

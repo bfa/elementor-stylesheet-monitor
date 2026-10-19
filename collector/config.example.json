@@ -1,0 +1,15 @@
+{
+  "timezone": "America/New_York",
+  "reportHour": 7,
+  "sites": [
+    {
+      "id": "example-site",
+      "label": "Example Site",
+      "site": "https://example.com",
+      "folderId": "REPLACE_WITH_PRIVATE_DRIVE_FOLDER_ID",
+      "recipient": "owner@example.com",
+      "zone": "America/New_York",
+      "cssBaseUrl": "https://example.com/wp-content/uploads/elementor/css/"
+    }
+  ]
+}

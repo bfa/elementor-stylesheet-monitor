@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.0
+
+- Add report enablement, daily/weekly frequency, local delivery hour and weekly day; share the alarm recipient.
+- Preserve existing collectors’ daily defaults while keeping reports off on new installations.
+- Publish signed report preferences and accept bounded, revision-matched report receipts.
+- Show Google acknowledgment, next report window and last submission outcome on Status.
+- Requires the companion collector update for report scheduling controls; collection and alarms remain independent.
+
 ## 0.4.1
 
 - Show the installed ESM version on the Status tab for easy post-update confirmation.

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Stylesheet Monitor for Elementor
  * Description: Responsive CSS health, bounded purge history, optional cache compatibility and email alarms.
- * Version: 0.4.1
+ * Version: 0.5.0
  * Requires at least: 6.6
  * Requires PHP: 8.1
  * Plugin URI: https://github.com/bfa/elementor-stylesheet-monitor
@@ -11,7 +11,7 @@
  */
 namespace ElementorStylesMonitor;
 if (!defined('ABSPATH')) { exit; }
-const VERSION = '0.4.1';
+const VERSION = '0.5.0';
 
 function legacy_active() {
     return function_exists('LTC\\ElementorPurgeLog\\record_purge')
@@ -40,6 +40,7 @@ function boot() {
     }
     require_once __DIR__ . '/includes/settings.php';
     require_once __DIR__ . '/includes/compatibility.php';
+    require_once __DIR__ . '/includes/reports.php';
     require_once __DIR__ . '/includes/status.php';
     require_once __DIR__ . '/includes/purge-log.php';
     require_once __DIR__ . '/includes/endpoint.php';

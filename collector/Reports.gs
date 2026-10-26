@@ -71,7 +71,7 @@ function esmAlarm_(site,state,collection,failed) {
 }
 function esmReportSite_(site,state,p,now) {
         const today=Utilities.formatDate(now,site.zone,'yyyy-MM-dd');
-        const requested=state.reportThrough?Date.parse(state.reportThrough):now.getTime()-(p.frequency==='weekly'?7:1)*86400000;
+        const requested=p.frequency==='weekly'?now.getTime()-7*86400000:(state.reportThrough?Date.parse(state.reportThrough):now.getTime()-86400000);
         const start=new Date(Math.max(requested,now.getTime()-7*86400000));
         const folder=DriveApp.getFolderById(site.folderId),events=new Map(),collections=[];
         for (let day=new Date(Date.UTC(start.getUTCFullYear(),start.getUTCMonth(),start.getUTCDate()));day<=now;day=new Date(day.getTime()+86400000)) {

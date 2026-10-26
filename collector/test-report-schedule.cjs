@@ -43,4 +43,7 @@ const prefs={schemaVersion:1,...p,revision:'a'.repeat(64)};
 assert.equal(c.esmReportPreferences_(site,{}, {reportPreferences:prefs}).recipient,'test@example.org');
 assert.throws(()=>c.esmReportPreferences_(site,{}, {reportPreferences:{...prefs,recipient:'a@example.org,b@example.org'}}));
 assert.equal(c.esmReportPreferences_(site,{reportHour:8},{}).hour,8);
+let reportNotes=''; c.esmSend_=(site,subject,rows,notes)=>{reportNotes=notes;};
+c.esmReportSite_(site,{reportThrough:'2026-10-18T11:31:00.000Z'},weekly,runTime);
+assert(reportNotes.includes('2026-10-12T11:30:00.000Z through 2026-10-19T11:30:00.000Z'));
 console.log('PASS: disabled/daily/weekly, migration dedupe, schedule edits, fixed timezone/DST, next windows, shared recipient validation, durable failure reservation; no real services');
